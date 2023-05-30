@@ -1,4 +1,6 @@
+let notification;
 let isWindowFocused = true
+
 window.onfocus = function() {
     isWindowFocused = true
 }
@@ -17,10 +19,12 @@ window.__core.onBroadcast((data) => {
 function showNotification(title, body) {
     if ('Notification' in window) {
         if (Notification.permission === 'granted') {
+            closeNotification()
             createNotification(title, body)
         } else if (Notification.permission !== 'denied') {
             Notification.requestPermission().then((permission) => {
                 if (permission === 'granted') {
+                    closeNotification()
                     createNotification(title, body)
                 }
             })
@@ -29,7 +33,14 @@ function showNotification(title, body) {
 }
 
 function createNotification(title, body) {
-    const notification = new Notification(title, {
+    notification = new Notification(title, {
         body: body,
-    })
+    });
+}
+
+function closeNotification() {
+    if (notification) {
+        notification.close();
+        notification = null;
+    }
 }
