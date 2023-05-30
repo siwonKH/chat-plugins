@@ -5,7 +5,7 @@ window.l = async () => {
     for (;;) {
         const chat = await showDialog()
         if (!chat) break
-        await c`${chat}`
+        await c([chat])
     }
 }
 
