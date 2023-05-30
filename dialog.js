@@ -5,11 +5,7 @@ window.l = async () => {
     for (;;) {
         const chat = await showDialog()
         if (!chat) break
-        await new Promise((resolve) => {
-            window.__core.sendBroadcast({ success: true, author: window.__basic.getAuthor(), message: chat }, () => {
-                resolve()
-            })
-        })
+        await c`${chat}`
     }
 }
 
