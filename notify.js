@@ -10,8 +10,10 @@ window.onblur = function() {
 
 window.__core.onBroadcast((data) => {
     if (data.room === undefined || data.room === window.__basic.getRoom()) {
-        if (document.visibilityState === 'hidden' || !isWindowFocused) {
-            showNotification('Developer Tab', data.message)
+        if (data.type === 'chat' || data.type === 'hello') {
+            if (document.visibilityState === 'hidden' || !isWindowFocused) {
+                showNotification('Developer Tab', data.message)
+            }
         }
     }
 })
