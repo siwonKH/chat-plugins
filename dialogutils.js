@@ -1,20 +1,27 @@
 const __pluginId__ = 'dialogutils'
-const __dialogVersion__ = 'v0.9'
+const __dialogVersion__ = 'v0.10'
 
 let initialDialogX = 20
 let initialDialogY = 20
 
+let dialogIndex = 1000
+
 const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle = {}, bodyStyle = {}) => {
-    const rand = Math.floor(Math.random() * 9000) + 1000
+    dialogIndex += 1
+    if (dialogIndex > 9999) {
+        dialogIndex = 1000
+    }
 
     const dialogDiv = document.createElement('div')
     dialogDiv.innerHTML = `
-        <div class="dialog-header-${rand}">
+        <div class="dialog-header-${dialogIndex}">
             <div>${title}</div>
-            <div><button class="dialog-close-${rand}">X</button></div>
+            <div><button class="dialog-close-${dialogIndex}">X</button></div>
         </div>
         ${body}
     `
+    dialogDiv.classList.add("dialog")
+
     document.body.appendChild(dialogDiv)
 
     Object.assign(dialogDiv.style, {
@@ -25,12 +32,12 @@ const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle 
         color: 'black',
         border: '1px solid #ccc',
         padding: '3px 10px 10px 10px',
-        zIndex: '9999',
+        zIndex: `${dialogIndex}`,
         boxShadow: '10px 10px 20px rgba(50, 50, 50, .2)',
         ...bodyStyle
     })
 
-    const dialogHeader = dialogDiv.querySelector(`.dialog-header-${rand}`)
+    const dialogHeader = dialogDiv.querySelector(`.dialog-header-${dialogIndex}`)
     Object.assign(dialogHeader.style, {
         cursor: 'move',
         color: 'black',
@@ -39,17 +46,13 @@ const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle 
         ...headerStyle
     })
 
-    const dialogCloser = dialogDiv.querySelector(`.dialog-close-${rand}`)
+    const dialogCloser = dialogDiv.querySelector(`.dialog-close-${dialogIndex}`)
     dialogCloser.onclick = () => {
         closeDialog(dialogDiv)
     }
 
     makeDraggable(dialogDiv, dialogHeader)
     return dialogDiv
-}
-
-function closeDialog(dialogDiv) {
-    document.body.removeChild(dialogDiv)
 }
 
 function makeDraggable(element, handle) {
@@ -94,9 +97,23 @@ function makeDraggable(element, handle) {
     }
 }
 
-window.__dialogutils = {
-    showDialog,
-    closeDialog
+function closeDialog(dialogDiv) {
+    document.body.removeChild(dialogDiv)
 }
 
-console.log(__pluginId__, __dialogVersion__)
+function closeAllDialog() {
+    const dialogs = document.querySelectorAll('.dialog')
+    dialogs.forEach((dialog) => {
+        document.body.removeChild(dialog)
+    })
+}
+
+window.__dialogutils = {
+    showDialog,
+    closeDialog,
+    closeAllDialog
+}
+
+window.clearDialog = window.__dialogutils.closeAllDialog
+
+    console.log(__pluginId__, __dialogVersion__)
