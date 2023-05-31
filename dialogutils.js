@@ -1,5 +1,6 @@
-
 const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle = {}, bodyStyle = {}) => {
+
+
     const rand = Math.floor(Math.random() * 9000) + 1000
 
     const dialogDiv = document.createElement('div')
@@ -32,9 +33,13 @@ const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle 
 
     document.body.appendChild(dialogDiv)
     makeDraggable(dialogDiv, dialogHeader)
+    return dialogDiv
 }
 
 const makeDraggable = (element, handle) => {
+    let dialogX = 50
+    let dialogY = 50
+
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0
     handle.addEventListener('mousedown', dragMouseDown)
 
@@ -69,6 +74,5 @@ const makeDraggable = (element, handle) => {
 }
 
 window.__dialogutils = {
-    makeDraggable,
     showDialog
 }
