@@ -1,5 +1,5 @@
 const __pluginId__ = 'dialogutils'
-const __dialogVersion__ = 'v0.4'
+const __dialogVersion__ = 'v0.5'
 
 let initialDialogX = 20
 let initialDialogY = 20
@@ -52,7 +52,7 @@ function closeDialog(dialogDiv) {
     document.body.removeChild(dialogDiv)
 }
 
-const makeDraggable = (element, handle) => {
+function makeDraggable(element, handle) {
     initialDialogX += 30
     initialDialogY += 30
     if (initialDialogX > 500) {
