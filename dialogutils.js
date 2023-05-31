@@ -5,7 +5,7 @@ const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle 
     dialogDiv.innerHTML = `
         <div class="dialog-header-${rand}">
             <div>${title}</div>
-            <div><button id="dialog-close-${rand}">X</button></div>
+            <div><button class="dialog-close-${rand}">X</button></div>
         </div>
         ${body}
     `
@@ -33,7 +33,7 @@ const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle 
         ...headerStyle
     })
 
-    const dialogCloser = dialogHeader.querySelector(`.dialog-close-${rand}`)
+    const dialogCloser = dialogDiv.querySelector(`.dialog-close-${rand}`)
     dialogCloser.onclick = () => {
         closeDialog(dialogDiv)
     }
