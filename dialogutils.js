@@ -1,5 +1,5 @@
 const __pluginId__ = 'dialogutils'
-const __dialogVersion__ = 'v0.5'
+const __dialogVersion__ = 'v0.6'
 
 let initialDialogX = 20
 let initialDialogY = 20
@@ -59,6 +59,7 @@ function makeDraggable(element, handle) {
         initialDialogX = 50
         initialDialogY = 50
     }
+    console.log(initialDialogX, initialDialogY)
     let dialogX = initialDialogX
     let dialogY = initialDialogY
 
