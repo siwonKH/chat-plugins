@@ -1,5 +1,5 @@
 const __pluginId__ = 'dialog'
-const __dialogVersion__ = 'v0.1'
+const __dialogVersion__ = 'v0.2'
 
 window.l = async () => {
     const dialogDiv = await customShowDialog()
@@ -18,11 +18,13 @@ function waitInput(dialogDiv) {
         function handleKeyDown(event) {
             if (event.key === 'Enter') {
                 event.preventDefault()
-                if (!chatInput.value) {
+                const chatInputValue = chatInput.value
+                chatInput.value = ''
+                if (!chatInputValue) {
                     chatInput.removeEventListener('keydown', handleKeyDown)
                     window.__dialogutils.closeDialog(dialogDiv)
                 }
-                resolve(chatInput.value)
+                resolve(chatInputValue)
             }
         }
     })
