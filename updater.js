@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v0.4'
+const __version__ = 'v0.4t1'
 
 let plugins
 let importedPluginsId
@@ -42,6 +42,16 @@ function updateAllPlugin() {
         refreshPluginList()
 
         const timestamp = new Date().getTime();
+
+        // for (const importedPlugin of importedPlugins) {
+        //     const hashedCode = await getPluginHash(plugin.url)
+        //
+        //     if (pluginHashes.get(plugin.id) !== hashedCode) {
+        //         await import(`${plugin.url}?${timestamp}`)
+        //         console.log('updated', plugin.id)
+        //         pluginHashes.set(plugin.id, hashedCode)
+        //     }
+        // }
 
         importedPlugins.forEach(async (plugin) => {
             const hashedCode = await getPluginHash(plugin.url)
