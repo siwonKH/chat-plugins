@@ -1,3 +1,5 @@
+const __dialogVersion__ = 'v0.1'
+
 const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle = {}, bodyStyle = {}) => {
     const rand = Math.floor(Math.random() * 9000) + 1000
 
@@ -72,3 +74,5 @@ const makeDraggable = (element, handle) => {
 window.__dialogutils = {
     showDialog
 }
+
+console.log(__dialogVersion__)
