@@ -55,6 +55,7 @@ function updateAllPlugin() {
 }
 
 init()
+
 window.updatePlugins = updateAllPlugin
 
 console.log(__pluginId__, __version__)
