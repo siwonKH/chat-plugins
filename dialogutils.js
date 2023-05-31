@@ -17,7 +17,7 @@ const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle 
         backgroundColor: '#f9f9f9',
         color: 'black',
         border: '1px solid #ccc',
-        padding: 'px 10px 10px 10px',
+        padding: '3px 10px 10px 10px',
         zIndex: '9999',
         boxShadow: '10px 10px 20px rgba(50, 50, 50, .2)',
         ...bodyStyle
