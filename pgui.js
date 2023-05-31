@@ -9,6 +9,13 @@ if (window.__dialogutils === undefined)
 
 let dialog = null
 
+window.loadPlugin = (plugin) => {
+    window.pload([plugin])
+    window.__dialogutils.closeDialog(dialog)
+    dialog = null
+    window.pgui()
+}
+
 window.pgui = () => {
     if (dialog !== null) {
         window.__dialogutils.closeDialog(dialog)
@@ -30,16 +37,9 @@ window.pgui = () => {
         ${plugins.map((v) => `
           <div style="display: flex; gap: 10px; justify-content: space-between;">
             <span>${v.id} - ${v.author}<br/> - ${v.name}</span>
-            <button style="color: white; background-color: ${v.already ? '#9c9c9c' : 'black'}; padding: 3px; cursor: pointer;" onclick="loadPlugin('${v.id}')">플러그인 로딩</button>
+            <button style="color: white; background-color: ${v.already ? '#9c9c9c' : 'black'}; padding: 3px; cursor: pointer;" onclick="window.loadPlugin('${v.id}')">플러그인 로딩</button>
           </div>
         `).join('')}
       </div>
     `)
-}
-
-function loadPlugin (plugin) {
-    window.pload([plugin])
-    window.__dialogutils.closeDialog(dialog)
-    dialog = null
-    window.pgui()
 }
