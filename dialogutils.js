@@ -1,5 +1,5 @@
 const __pluginId__ = 'dialogutils'
-const __dialogVersion__ = 'v0.7'
+const __dialogVersion__ = 'v0.8'
 
 let initialDialogX = 20
 let initialDialogY = 20
@@ -59,10 +59,8 @@ function makeDraggable(element, handle) {
         initialDialogX = 50
         initialDialogY = 50
     }
-    console.log(initialDialogX, initialDialogY)
-    let dialogX = initialDialogX
-    let dialogY = initialDialogY
-    console.log(dialogX, dialogY)
+    element.style.top = `${initialDialogX}px`
+    element.style.left = `${initialDialogY}px`
 
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0
     handle.addEventListener('mousedown', dragMouseDown)
@@ -85,8 +83,6 @@ function makeDraggable(element, handle) {
         const newPosY = element.offsetTop - pos2
         element.style.top = `${newPosY}px`
         element.style.left = `${newPosX}px`
-        dialogX = newPosX
-        dialogY = newPosY
     }
 
     function closeDragElement() {
