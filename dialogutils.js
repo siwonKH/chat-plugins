@@ -3,12 +3,11 @@ const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle 
 
     const dialogDiv = document.createElement('div')
     dialogDiv.innerHTML = `
-        <div className="draggable-${rand}">
-            <div className="dialog-header-${rand}">${title}</div>
+        <div class="draggable-${rand}">
+            <div class="dialog-header-${rand}">${title}</div>
             ${body}
         </div>
     `
-    console.log(dialogDiv)
     document.body.appendChild(dialogDiv)
 
     Object.assign(dialogDiv.style, {
