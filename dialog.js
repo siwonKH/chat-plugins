@@ -3,9 +3,9 @@ let dialogY = 50
 
 window.l = async () => {
     for (;;) {
-        const chat = await showDialog()
-        if (!chat) break
-        await c([chat])
+        const msg = await showDialog()
+        if (!msg) break
+        await chat([msg])
     }
 }
 
@@ -25,6 +25,7 @@ function showDialog() {
             top: `${dialogY}px`,
             left: `${dialogX}px`,
             backgroundColor: '#f9f9f9',
+            color: 'black',
             border: '1px solid #ccc',
             padding: '10px',
             zIndex: '9999',
@@ -33,7 +34,8 @@ function showDialog() {
 
         const dialogHeader = dialogDiv.querySelector('.dialog-header')
         Object.assign(dialogHeader.style, {
-            cursor: 'move'
+            cursor: 'move',
+            color: 'black'
         })
 
         document.body.appendChild(dialogDiv)
