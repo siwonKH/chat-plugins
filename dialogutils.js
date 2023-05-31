@@ -1,5 +1,5 @@
 const __pluginId__ = 'dialogutils'
-const __dialogVersion__ = 'v0.12'
+const __dialogVersion__ = 'v0.13'
 
 let initialDialogX = 20
 let initialDialogY = 20
@@ -60,7 +60,7 @@ function makeDraggable(element, handle) {
     initialDialogY += 30
     if (initialDialogX > 350) {
         initialDialogX = 50
-        initialDialogY = initialDialogY - (initialDialogY - initialDialogX) + 30
+        initialDialogY = initialDialogY - 300 + 30
         if (initialDialogY > 350) {
             initialDialogY = 50
         }
@@ -68,14 +68,16 @@ function makeDraggable(element, handle) {
     element.style.top = `${initialDialogX}px`
     element.style.left = `${initialDialogY}px`
 
-    const currentIndex = element.style.zIndex
-
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0
     handle.addEventListener('mousedown', dragMouseDown)
 
     function dragMouseDown(e) {
         e.preventDefault()
-        element.style.zIndex = '10000000'
+        if (element.style.zIndex !== `${dialogIndex}`) {
+            dialogIndex += 1
+            element.style.zIndex = `${dialogIndex}`
+            console.log('changed z-index')
+        }
 
         pos3 = e.clientX
         pos4 = e.clientY
