@@ -117,4 +117,4 @@ window.__dialogutils = {
 
 window.clearDialog = window.__dialogutils.closeAllDialog
 
-    console.log(__pluginId__, __dialogVersion__)
+console.log(__pluginId__, __dialogVersion__)
