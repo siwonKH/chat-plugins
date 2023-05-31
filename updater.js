@@ -18,3 +18,5 @@ function updateAllPlugin() {
         console.log(hashedCode)
     })
 }
+
+window.updatePlugins = updateAllPlugin
