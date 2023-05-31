@@ -1,8 +1,8 @@
 const __pluginId__ = 'dialogutils'
-const __dialogVersion__ = 'v0.3'
+const __dialogVersion__ = 'v0.4'
 
-let initialDialogX = 50
-let initialDialogY = 50
+let initialDialogX = 20
+let initialDialogY = 20
 
 const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle = {}, bodyStyle = {}) => {
     const rand = Math.floor(Math.random() * 9000) + 1000
