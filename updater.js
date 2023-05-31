@@ -15,7 +15,7 @@ function updateAllPlugin() {
     importedPlugins.forEach(async (plugin) => {
         const res = await fetch(plugin.url)
         const hashedCode = await sha1(res.text())
-        console.log(hashedCode)
+        console.log(plugin.url, hashedCode)
     })
 }
 
