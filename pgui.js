@@ -7,13 +7,17 @@ if (window.__loader === undefined)
 if (window.__dialogutils === undefined)
     throw new Error('Please import "dialogutils" plugin first.')
 
+console.log('Plugin GUI Loaded!')
+
 let dialog = null
 
-window.loadPlugin = (plugin) => {
-    window.pload([plugin])
-    window.__dialogutils.closeDialog(dialog)
-    dialog = null
-    window.pgui()
+window.__pgui = {
+    loadPlugin: (plugin) => {
+        window.pload([plugin])
+        window.__dialogutils.closeDialog(dialog)
+        dialog = null
+        window.pgui()
+    }
 }
 
 window.pgui = () => {
@@ -37,7 +41,7 @@ window.pgui = () => {
         ${plugins.map((v) => `
           <div style="display: flex; gap: 10px; justify-content: space-between;">
             <span>${v.id} - ${v.author}<br/> - ${v.name}</span>
-            <button style="color: white; background-color: ${v.already ? '#9c9c9c' : 'black'}; padding: 3px; cursor: pointer;" onclick="window.loadPlugin('${v.id}')">플러그인 로딩</button>
+            <button style="color: white; background-color: ${v.already ? '#9c9c9c' : 'black'}; padding: 3px; cursor: pointer;" onclick="window.__pgui.loadPlugin('${v.id}')">플러그인 로딩</button>
           </div>
         `).join('')}
       </div>
