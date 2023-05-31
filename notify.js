@@ -1,4 +1,7 @@
-let notification;
+const __pluginId__ = 'notify'
+const __dialogVersion__ = 'v0.1'
+
+let notification
 let isWindowFocused = true
 
 window.onfocus = function() {
@@ -8,11 +11,13 @@ window.onblur = function() {
     isWindowFocused = false
 }
 
+showNotification('Developer Tab', `${__pluginId__}. ${__dialogVersion__}`)
+
 window.__core.onBroadcast((data) => {
     if (data.room === undefined || data.room === window.__basic.getRoom()) {
         if (data.type === 'chat' || data.type === 'hello') {
             if (document.visibilityState === 'hidden' || !isWindowFocused) {
-                showNotification('Developer Tab', data.message)
+                showNotification('Notify', data.message)
             }
         }
     }
