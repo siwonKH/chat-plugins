@@ -5,7 +5,11 @@ let plugins
 let importedPluginsId
 let importedPlugins
 
-let pluginHashes = []
+let pluginHashes = new Map()
+importedPlugins.forEach(async (plugin) => {
+    const hashedCode = await checkPluginHash(plugin.url)
+    pluginHashes.set(plugin.id, hashedCode)
+})
 
 function refreshPluginList() {
     plugins = window.__loader.getPlugins()
@@ -22,23 +26,25 @@ async function sha1(message) {
     return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
 }
 
-async function checkPluginHash(url) {
+async function getPluginHash(url) {
     const res = await fetch(url)
     const code = await res.text()
     return await sha1(code)
 }
 
 function updateAllPlugin() {
-    importedPlugins.forEach(async (plugin) => {
-        const hashedCode = await checkPluginHash(plugin.url)
-        pluginHashes.push({id: plugin.id, hash: hashedCode})
-    })
-    console.log(pluginHashes)
-
     refreshPluginList()
+
+    importedPlugins.forEach(async (plugin) => {
+        const hashedCode = await getPluginHash(plugin.url)
+        if (pluginHashes.get(plugin.id) !== hashedCode) {
+            await import(plugin.url)
+            console.log('updated', plugin.id)
+            pluginHashes.set(plugin.id, hashedCode)
+        }
+    })
 }
 
-refreshPluginList()
 window.updatePlugins = updateAllPlugin
 
 console.log(__pluginId__, __version__)
