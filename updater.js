@@ -14,8 +14,9 @@ async function sha1(message) {
 function updateAllPlugin() {
     importedPlugins.forEach(async (plugin) => {
         const res = await fetch(plugin.url)
-        const hashedCode = await sha1(res.text())
-        console.log(plugin.url, hashedCode, res.text())
+        const code = await res.text()
+        const hashedCode = await sha1(code)
+        console.log(plugin.url, hashedCode)
     })
 }
 
