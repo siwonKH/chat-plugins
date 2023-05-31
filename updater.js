@@ -1,7 +1,18 @@
-const plugins = window.__loader.getPlugins()
-const importedPluginsId = window.__loader.getImportedPlugins()
+const __pluginId__ = 'updater'
+const __version__ = 'v0.1'
 
-const importedPlugins = plugins.filter((p) => importedPluginsId.includes(p.id))
+let plugins
+let importedPluginsId
+let importedPlugins
+
+let pluginHashes = []
+
+function refreshPluginList() {
+    plugins = window.__loader.getPlugins()
+    importedPluginsId = window.__loader.getImportedPlugins()
+
+    importedPlugins = plugins.filter((p) => importedPluginsId.includes(p.id))
+}
 
 async function sha1(message) {
     const encoder = new TextEncoder();
@@ -11,13 +22,23 @@ async function sha1(message) {
     return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
 }
 
-function updateAllPlugin() {
-    importedPlugins.forEach(async (plugin) => {
-        const res = await fetch(plugin.url)
-        const code = await res.text()
-        const hashedCode = await sha1(code)
-        console.log(plugin.url, hashedCode)
-    })
+async function checkPluginHash(url) {
+    const res = await fetch(url)
+    const code = await res.text()
+    return await sha1(code)
 }
 
+function updateAllPlugin() {
+    importedPlugins.forEach(async (plugin) => {
+        const hashedCode = await checkPluginHash(plugin.url)
+        pluginHashes.push({id: plugin.id, hash: hashedCode})
+    })
+    console.log(pluginHashes)
+
+    refreshPluginList()
+}
+
+refreshPluginList()
 window.updatePlugins = updateAllPlugin
+
+console.log(__pluginId__, __version__)
