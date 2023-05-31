@@ -1,3 +1,9 @@
+const __pluginId__ = 'dialogutils'
+const __dialogVersion__ = 'v0.3'
+
+let initialDialogX = 50
+let initialDialogY = 50
+
 const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle = {}, bodyStyle = {}) => {
     const rand = Math.floor(Math.random() * 9000) + 1000
 
@@ -47,8 +53,14 @@ function closeDialog(dialogDiv) {
 }
 
 const makeDraggable = (element, handle) => {
-    let dialogX = 50
-    let dialogY = 50
+    initialDialogX += 30
+    initialDialogY += 30
+    if (initialDialogX > 500) {
+        initialDialogX = 50
+        initialDialogY = 50
+    }
+    let dialogX = initialDialogX
+    let dialogY = initialDialogY
 
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0
     handle.addEventListener('mousedown', dragMouseDown)
@@ -85,3 +97,5 @@ window.__dialogutils = {
     showDialog,
     closeDialog
 }
+
+console.log(__pluginId__, __dialogVersion__)
