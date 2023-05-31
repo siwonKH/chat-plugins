@@ -1,5 +1,5 @@
 const __pluginId__ = 'dialogutils'
-const __dialogVersion__ = 'v0.8'
+const __dialogVersion__ = 'v0.9'
 
 let initialDialogX = 20
 let initialDialogY = 20
@@ -55,9 +55,12 @@ function closeDialog(dialogDiv) {
 function makeDraggable(element, handle) {
     initialDialogX += 30
     initialDialogY += 30
-    if (initialDialogX > 500) {
+    if (initialDialogX > 350) {
         initialDialogX = 50
-        initialDialogY = 50
+        initialDialogY = initialDialogY - (initialDialogY - initialDialogX) + 30
+        if (initialDialogY > 350) {
+            initialDialogY = 50
+        }
     }
     element.style.top = `${initialDialogX}px`
     element.style.left = `${initialDialogY}px`
