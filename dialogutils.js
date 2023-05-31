@@ -76,7 +76,6 @@ function makeDraggable(element, handle) {
         if (element.style.zIndex !== `${dialogIndex}`) {
             dialogIndex += 1
             element.style.zIndex = `${dialogIndex}`
-            console.log('changed z-index')
         }
 
         pos3 = e.clientX
