@@ -1,5 +1,5 @@
 const __pluginId__ = 'dialogutils'
-const __dialogVersion__ = 'v0.10'
+const __dialogVersion__ = 'v0.11'
 
 let initialDialogX = 20
 let initialDialogY = 20
@@ -106,6 +106,7 @@ function closeAllDialog() {
     dialogs.forEach((dialog) => {
         document.body.removeChild(dialog)
     })
+    dialogIndex = 1000
 }
 
 window.__dialogutils = {
