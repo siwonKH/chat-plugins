@@ -1,5 +1,5 @@
 const __pluginId__ = 'notify'
-const __dialogVersion__ = 'v0.1'
+const __dialogVersion__ = 'v0.2'
 
 let notification
 let isWindowFocused = true
@@ -29,6 +29,7 @@ function showNotification(title, body) {
             closeNotification()
             createNotification(title, body)
         } else if (Notification.permission !== 'denied') {
+            console.log('Please allow notification.')
             Notification.requestPermission().then((permission) => {
                 if (permission === 'granted') {
                     closeNotification()
