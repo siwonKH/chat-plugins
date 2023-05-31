@@ -1,5 +1,5 @@
 const __pluginId__ = 'dialogutils'
-const __dialogVersion__ = 'v0.16'
+const __version__ = 'v0.17'
 
 let initialDialogX = 20
 let initialDialogY = 20
@@ -18,15 +18,11 @@ const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle 
             <div>${title}</div>
             <div><button class="dialog-close-${dialogIndex}">X</button></div>
         </div>
-        <div class="__body"></div>
+        ${body}
     `
     dialogDiv.classList.add("dialog")
-    document.body.appendChild(dialogDiv)
 
-    const bodyDiv = document.createElement('div')
-    bodyDiv.innerHTML = `${body}`
-    const dialogBody = dialogDiv.querySelector(`.dialog-header-${dialogIndex}`)
-    dialogBody.appendChild(bodyDiv)
+    document.body.appendChild(dialogDiv)
 
     Object.assign(dialogDiv.style, {
         position: 'absolute',
@@ -126,4 +122,4 @@ window.__dialogutils = {
 
 window.clearDialog = window.__dialogutils.closeAllDialog
 
-console.log(__pluginId__, __dialogVersion__)
+console.log(__pluginId__, __version__)
