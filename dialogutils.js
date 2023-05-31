@@ -1,14 +1,12 @@
-const __dialogVersion__ = 'v0.1'
+const __dialogVersion__ = 'v0.2'
 
 const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle = {}, bodyStyle = {}) => {
     const rand = Math.floor(Math.random() * 9000) + 1000
 
     const dialogDiv = document.createElement('div')
     dialogDiv.innerHTML = `
-        <div class="draggable-${rand}">
-            <div class="dialog-header-${rand}">${title}</div>
-            ${body}
-        </div>
+        <div class="dialog-header-${rand}">${title}</div>
+        ${body}
     `
     document.body.appendChild(dialogDiv)
 
@@ -19,7 +17,7 @@ const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle 
         backgroundColor: '#f9f9f9',
         color: 'black',
         border: '1px solid #ccc',
-        padding: '10px',
+        padding: 'px 10px 10px 10px',
         zIndex: '9999',
         boxShadow: '10px 10px 20px rgba(50, 50, 50, .2)',
         ...bodyStyle
