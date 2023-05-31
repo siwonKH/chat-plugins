@@ -1,6 +1,4 @@
 const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle = {}, bodyStyle = {}) => {
-
-
     const rand = Math.floor(Math.random() * 9000) + 1000
 
     const dialogDiv = document.createElement('div')
@@ -10,6 +8,7 @@ const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle 
             ${body}
         </div>
     `
+    console.log(dialogDiv)
     document.body.appendChild(dialogDiv)
 
     Object.assign(dialogDiv.style, {
