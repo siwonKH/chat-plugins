@@ -71,5 +71,6 @@ const makeDraggable = (element, handle) => {
 }
 
 window.__dialogutils = {
-    makeDraggable
+    makeDraggable,
+    showDialog
 }
