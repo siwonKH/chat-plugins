@@ -1,15 +1,15 @@
 const __pluginId__ = 'dialogutils'
-const __dialogVersion__ = 'v0.11'
+const __dialogVersion__ = 'v0.12'
 
 let initialDialogX = 20
 let initialDialogY = 20
 
-let dialogIndex = 1000
+let dialogIndex = 1000000
 
 const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle = {}, bodyStyle = {}) => {
     dialogIndex += 1
-    if (dialogIndex > 9999) {
-        dialogIndex = 1000
+    if (dialogIndex > 9999999) {
+        dialogIndex = 1000000
     }
 
     const dialogDiv = document.createElement('div')
@@ -68,11 +68,15 @@ function makeDraggable(element, handle) {
     element.style.top = `${initialDialogX}px`
     element.style.left = `${initialDialogY}px`
 
+    const currentIndex = element.style.zIndex
+
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0
     handle.addEventListener('mousedown', dragMouseDown)
 
     function dragMouseDown(e) {
         e.preventDefault()
+        element.style.zIndex = '10000000'
+
         pos3 = e.clientX
         pos4 = e.clientY
         document.onmouseup = closeDragElement
@@ -92,6 +96,7 @@ function makeDraggable(element, handle) {
     }
 
     function closeDragElement() {
+        element.style.zIndex = `${currentIndex}`
         document.onmouseup = null
         document.onmousemove = null
     }
@@ -106,7 +111,7 @@ function closeAllDialog() {
     dialogs.forEach((dialog) => {
         document.body.removeChild(dialog)
     })
-    dialogIndex = 1000
+    dialogIndex = 1000000
 }
 
 window.__dialogutils = {
