@@ -13,8 +13,8 @@ const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle 
 
     Object.assign(dialogDiv.style, {
         position: 'absolute',
-        top: `${dialogY}px`,
-        left: `${dialogX}px`,
+        top: '50px',
+        left: '50px',
         backgroundColor: '#f9f9f9',
         color: 'black',
         border: '1px solid #ccc',
