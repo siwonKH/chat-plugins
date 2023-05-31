@@ -10,6 +10,7 @@ const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle 
             ${body}
         </div>
     `
+    document.body.appendChild(dialogDiv)
 
     Object.assign(dialogDiv.style, {
         position: 'absolute',
@@ -31,7 +32,6 @@ const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle 
         ...headerStyle
     })
 
-    document.body.appendChild(dialogDiv)
     makeDraggable(dialogDiv, dialogHeader)
     return dialogDiv
 }
