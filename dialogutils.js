@@ -1,5 +1,5 @@
 const __pluginId__ = 'dialogutils'
-const __dialogVersion__ = 'v0.13'
+const __dialogVersion__ = 'v0.14'
 
 let initialDialogX = 20
 let initialDialogY = 20
@@ -98,7 +98,6 @@ function makeDraggable(element, handle) {
     }
 
     function closeDragElement() {
-        element.style.zIndex = `${currentIndex}`
         document.onmouseup = null
         document.onmousemove = null
     }
