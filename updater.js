@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v0.3'
+const __version__ = 'v0.4'
 
 let plugins
 let importedPluginsId
@@ -38,20 +38,22 @@ async function getPluginHash(url) {
 }
 
 function updateAllPlugin() {
-    refreshPluginList()
+    return new Promise((resolve) => {
+        refreshPluginList()
 
-    const timestamp = new Date().getTime();
+        const timestamp = new Date().getTime();
 
-    importedPlugins.forEach(async (plugin) => {
-        const hashedCode = await getPluginHash(plugin.url)
-        if (pluginHashes.get(plugin.id) !== hashedCode) {
-            await import(`${plugin.url}?${timestamp}`)
-            console.log('updated', plugin.id)
-            pluginHashes.set(plugin.id, hashedCode)
-        }
+        importedPlugins.forEach(async (plugin) => {
+            const hashedCode = await getPluginHash(plugin.url)
+            if (pluginHashes.get(plugin.id) !== hashedCode) {
+                await import(`${plugin.url}?${timestamp}`)
+                console.log('updated', plugin.id)
+                pluginHashes.set(plugin.id, hashedCode)
+            }
+        })
+
+        resolve('Everything up-to-date!')
     })
-
-    return 'Everything up-to-date!'
 }
 
 init()
