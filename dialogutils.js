@@ -3,7 +3,10 @@ const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle 
 
     const dialogDiv = document.createElement('div')
     dialogDiv.innerHTML = `
-        <div class="dialog-header-${rand}">${title}</div>
+        <div class="dialog-header-${rand}">
+            <div>${title}</div>
+            <div><button id="dialog-close-${rand}">X</button></div>
+        </div>
         ${body}
     `
     document.body.appendChild(dialogDiv)
@@ -25,11 +28,22 @@ const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle 
     Object.assign(dialogHeader.style, {
         cursor: 'move',
         color: 'black',
+        display: 'flex',
+        justifyContent: 'space-between',
         ...headerStyle
     })
 
+    const dialogCloser = dialogHeader.querySelector(`.dialog-close-${rand}`)
+    dialogCloser.onclick = () => {
+        closeDialog(dialogDiv)
+    }
+
     makeDraggable(dialogDiv, dialogHeader)
     return dialogDiv
+}
+
+function closeDialog(dialogDiv) {
+    document.body.removeChild(dialogDiv)
 }
 
 const makeDraggable = (element, handle) => {
@@ -68,5 +82,6 @@ const makeDraggable = (element, handle) => {
 }
 
 window.__dialogutils = {
-    showDialog
+    showDialog,
+    closeDialog
 }
