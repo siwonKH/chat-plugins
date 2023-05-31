@@ -1,39 +1,37 @@
 
 const showDialog = (title = 'Example title', body = '<p>Hello</p>', headerStyle = {}, bodyStyle = {}) => {
-    return new Promise((resolve) => {
-        const rand = Math.floor(Math.random() * 9000) + 1000
+    const rand = Math.floor(Math.random() * 9000) + 1000
 
-        const dialogDiv = document.createElement('div')
-        dialogDiv.innerHTML = `
-            <div className="draggable-${rand}">
-                <div className="dialog-header-${rand}">${title}</div>
-                ${body}
-            </div>
-        `
+    const dialogDiv = document.createElement('div')
+    dialogDiv.innerHTML = `
+        <div className="draggable-${rand}">
+            <div className="dialog-header-${rand}">${title}</div>
+            ${body}
+        </div>
+    `
 
-        Object.assign(dialogDiv.style, {
-            position: 'absolute',
-            top: `${dialogY}px`,
-            left: `${dialogX}px`,
-            backgroundColor: '#f9f9f9',
-            color: 'black',
-            border: '1px solid #ccc',
-            padding: '10px',
-            zIndex: '9999',
-            boxShadow: '10px 10px 20px rgba(50, 50, 50, .2)',
-            ...bodyStyle
-        })
-
-        const dialogHeader = dialogDiv.querySelector(`.dialog-header-${rand}`)
-        Object.assign(dialogHeader.style, {
-            cursor: 'move',
-            color: 'black',
-            ...headerStyle
-        })
-
-        document.body.appendChild(dialogDiv)
-        makeDraggable(dialogDiv, dialogHeader)
+    Object.assign(dialogDiv.style, {
+        position: 'absolute',
+        top: `${dialogY}px`,
+        left: `${dialogX}px`,
+        backgroundColor: '#f9f9f9',
+        color: 'black',
+        border: '1px solid #ccc',
+        padding: '10px',
+        zIndex: '9999',
+        boxShadow: '10px 10px 20px rgba(50, 50, 50, .2)',
+        ...bodyStyle
     })
+
+    const dialogHeader = dialogDiv.querySelector(`.dialog-header-${rand}`)
+    Object.assign(dialogHeader.style, {
+        cursor: 'move',
+        color: 'black',
+        ...headerStyle
+    })
+
+    document.body.appendChild(dialogDiv)
+    makeDraggable(dialogDiv, dialogHeader)
 }
 
 const makeDraggable = (element, handle) => {
