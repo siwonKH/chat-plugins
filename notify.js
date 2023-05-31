@@ -1,5 +1,5 @@
 const __pluginId__ = 'notify'
-const __dialogVersion__ = 'v0.2'
+const __version__ = 'v0.3'
 
 let notification
 let isWindowFocused = true
@@ -52,3 +52,5 @@ function closeNotification() {
         notification = null;
     }
 }
+
+console.log(__pluginId__, __version__)

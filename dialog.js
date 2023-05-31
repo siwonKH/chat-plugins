@@ -1,5 +1,5 @@
 const __pluginId__ = 'dialog'
-const __dialogVersion__ = 'v0.3'
+const __version__ = 'v0.4'
 
 window.l = async () => {
     const dialogDiv = await customShowDialog()
@@ -40,4 +40,4 @@ function customShowDialog() {
     })
 }
 
-console.log(__pluginId__, __dialogVersion__)
+console.log(__pluginId__, __version__)
