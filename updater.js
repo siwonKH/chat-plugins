@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.16'
+const __version__ = 'v2.17'
 
 let plugins
 let importedPluginsId
@@ -102,18 +102,22 @@ async function updateAllPlugin() {
 
 function enableAutoUpdate() {
     intervalId = setInterval(updateAllPlugin, 30000)
-    log('Auto update on')
 }
 
 function disableAutoUpdate() {
     clearInterval(intervalId)
     intervalId = undefined
-    log('Auto update off')
 }
 
 function toggleAutoUpdate() {
-    if (intervalId) enableAutoUpdate()
-    else disableAutoUpdate()
+    if (intervalId) {
+        enableAutoUpdate()
+        log('Auto update ON')
+    }
+    else {
+        disableAutoUpdate()
+        log('Auto update OFF')
+    }
 }
 
 async function init() {
