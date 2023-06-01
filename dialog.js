@@ -1,5 +1,5 @@
 const __pluginId__ = 'dialog'
-const __version__ = 'v0.8'
+const __version__ = 'v0.9'
 
 window.loopChat = async () => {
     const dialogDiv = await customShowDialog()
@@ -40,6 +40,7 @@ function waitInput(dialogDiv) {
                     chatInput.removeEventListener('keydown', handleKeyDownForAuthor)
                     author([authorInputValue])
                     authorInput.style.display = 'none'
+                    console.log('author:', authorInputValue)
                 }
             }
         }
