@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.7'
+const __version__ = 'v2.7t1'
 
 let plugins
 let importedPluginsId
@@ -99,7 +99,7 @@ async function updateAllPlugin() {
 }
 
 function _unload() {
-    window.updatePlugins = undefined
+    // window.updatePlugins = undefined
 }
 window.__updater = { _unload }
 window.updatePlugins = updateAllPlugin
