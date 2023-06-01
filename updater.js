@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.11'
+const __version__ = 'v2.12'
 
 let plugins
 let importedPluginsId
@@ -19,6 +19,7 @@ function refreshPluginList() {
     for (const importedPluginId of importedPluginsId) {
         importedPlugins.push(getPlugin(importedPluginId))
     }
+    importedPlugins.push(importedPlugins.splice(importedPlugins.indexOf(getPlugin(__pluginId__)), 1)[0]);
 }
 
 async function sha1(message) {
