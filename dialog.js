@@ -1,5 +1,5 @@
 const __pluginId__ = 'dialog'
-const __version__ = 'v0.5'
+const __version__ = 'v0.6'
 
 window.l = async () => {
     const dialogDiv = await customShowDialog()
@@ -33,6 +33,12 @@ async function customShowDialog() {
             <input type="text" id="chatInput">
         `
     return window.__dialogutils.showDialog('Enter Chat', bodyElement)
+}
+
+window.__dialog = {
+    _unload: () => {
+        window.l = undefined
+    }
 }
 
 console.log(__pluginId__, __version__)
