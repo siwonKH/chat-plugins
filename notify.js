@@ -1,5 +1,5 @@
 const __pluginId__ = 'notify'
-const __version__ = 'v0.4t2'
+const __version__ = 'v0.5'
 
 let notification
 
@@ -50,6 +50,12 @@ function closeNotification() {
     if (notification) {
         notification.close();
         notification = null;
+    }
+}
+
+window.__notify = {
+    _unload: () => {
+        closeNotification()
     }
 }
 
