@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.3'
+const __version__ = 'v2.4'
 
 let plugins
 let importedPluginsId
@@ -13,6 +13,7 @@ function getPlugin(pluginId) {
 function refreshPluginList() {
     plugins = window.__loader.getPlugins()
     importedPluginsId = window.__loader.getImportedPlugins()
+    importedPlugins = []
     for (const importedPluginId of importedPluginsId) {
         importedPlugins.push(getPlugin(importedPluginId))
     }
