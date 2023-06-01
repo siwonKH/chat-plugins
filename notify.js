@@ -1,5 +1,5 @@
 const __pluginId__ = 'notify'
-const __version__ = 'v0.4'
+const __version__ = 'v0.4t1'
 
 let notification
 
