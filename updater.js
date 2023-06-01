@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.6t3'
+const __version__ = 'v2.7'
 
 let plugins
 let importedPluginsId
@@ -71,22 +71,22 @@ async function pluginHasUpdate(plugin) {
 async function updatePlugin(pluginId) {
     const plugin = getPlugin(pluginId)
     if (!plugin) {
-        console.log('No such plugin.')
+        console.log('No such plugin', `'${pluginId}'`)
         return
     }
 
     if (await pluginHasUpdate(plugin)) {
         const unloadSuccess = unloadPlugin(plugin)
         if (!unloadSuccess) {
-            console.log(pluginId, 'does not support auto update')
+            console.log(`'${pluginId}'`, 'does not support auto update')
             return
         }
         const loadSuccess = await loadPlugin(plugin)
         if (!loadSuccess) {
-            console.log(pluginId, 'load failed')
+            console.log(`'${pluginId}'`, 'load failed')
             return
         }
-        console.log(pluginId, 'updated!')
+        console.log(`'${pluginId}'`, 'updated!')
     }
 }
 
@@ -101,7 +101,6 @@ async function updateAllPlugin() {
 function _unload() {
     window.updatePlugins = undefined
 }
-
-updateAllPlugin()
 window.__updater = { _unload }
 window.updatePlugins = updateAllPlugin
+updateAllPlugin()
