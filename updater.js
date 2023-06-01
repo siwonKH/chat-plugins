@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.7t1'
+const __version__ = 'v2.8'
 
 let plugins
 let importedPluginsId
@@ -35,6 +35,9 @@ async function getPluginHash(url) {
 
 function unloadPlugin(plugin) {
     const pluginObj = '__' + plugin.id
+    if (!window[pluginObj]) {
+        return false
+    }
     if (!window[pluginObj]._unload) {
         return false
     }
