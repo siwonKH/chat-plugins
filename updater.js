@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.9'
+const __version__ = 'v2.10'
 
 let plugins
 let importedPluginsId
@@ -40,10 +40,11 @@ function unloadPlugin(plugin) {
     if (!window[pluginObj]) {
         return false
     }
-    if (!window[pluginObj]._unload) {
-        return false
+    if (window[pluginObj]._unload) {
+        window[pluginObj]._unload()
+    } else {
+        console.log("Adding '_unload' function is recommended. (report this to plugin Dev.)")
     }
-    window[pluginObj]._unload()
     window[pluginObj] = undefined
     return true
 }
@@ -53,6 +54,7 @@ async function loadPlugin(plugin) {
         await import(`${plugin.url}?${timestamp}`)
     } catch (e) {
         console.error(e)
+        console.log('Error while importing', `'${plugin.id}'`)
         return false
     }
     return true
