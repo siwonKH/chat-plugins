@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.18t1'
+const __version__ = 'v2.19'
 
 let plugins
 let importedPluginsId
@@ -10,7 +10,7 @@ let timestamp
 let intervalId
 
 const logStyle = [
-    '%cUpdater', `
+    `%c${__pluginId__} ${__version__}`, `
   display: inline-block;
   background-color: #060D0D;
   color: #fff;
@@ -20,7 +20,7 @@ const logStyle = [
 ]
 
 function log(message) {
-    console.log(...logStyle, message, `(${__pluginId__} ${__version__})`)
+    console.log(...logStyle, message)
 }
 
 function getPlugin(pluginId) {
