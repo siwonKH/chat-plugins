@@ -1,5 +1,5 @@
 const __pluginId__ = 'dialogutils'
-const __version__ = 'v0.18'
+const __version__ = 'v0.18t1'
 
 let initialDialogX = 20
 let initialDialogY = 20
