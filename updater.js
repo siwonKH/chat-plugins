@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.12'
+const __version__ = 'v2.13'
 
 let plugins
 let importedPluginsId
@@ -97,7 +97,10 @@ async function updateAllPlugin() {
     for (const plugin of importedPlugins) {
         await updatePlugin(plugin.id)
     }
-    console.log('Everything up-to-date!', `(${__pluginId__} ${__version__})`)
+}
+
+function autoUpdate() {
+    setInterval(updateAllPlugin, 30000)
 }
 
 window.__updater = {
@@ -106,5 +109,11 @@ window.__updater = {
     },
     _version: __version__
 }
-window.updatePlugins = updateAllPlugin
+window.updatePlugins = async () => {
+    await updateAllPlugin()
+    console.log('Everything up-to-date!', `(${__pluginId__} ${__version__})`)
+}
+
 updateAllPlugin()
+autoUpdate()
+console.log(__pluginId__, __version__, 'loaded')
