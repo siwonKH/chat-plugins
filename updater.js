@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.20'
+const __version__ = 'v2.21'
 
 let plugins
 let importedPluginsId
@@ -86,6 +86,8 @@ async function updatePlugin(plugin) {
     timestamp = Date.now()
 
     if (await pluginHasUpdate(plugin)) {
+        pluginHashes.set(plugin.id, await getPluginHash(`${plugin.url}?${timestamp}`))
+
         const unloadSuccess = unloadPlugin(plugin)
         if (!unloadSuccess) {
             log(`'${plugin.id}'` + ' does not support auto update')
@@ -96,7 +98,6 @@ async function updatePlugin(plugin) {
             log(`'${plugin.id}'` + ' load failed')
             return
         }
-        pluginHashes.set(plugin.id, await getPluginHash(`${plugin.url}?${timestamp}`))
         log(`'${plugin.id}'` + ' updated!')
     }
 }
