@@ -1,5 +1,5 @@
 const __pluginId__ = 'dialog'
-const __version__ = 'v0.4'
+const __version__ = 'v0.5'
 
 window.l = async () => {
     const dialogDiv = await customShowDialog()
@@ -10,34 +10,29 @@ window.l = async () => {
     }
 }
 
-function waitInput(dialogDiv) {
-    return new Promise((resolve) => {
-        const chatInput = dialogDiv.querySelector('#chatInput')
-        chatInput.value = ''
-        chatInput.focus()
-        chatInput.addEventListener('keydown', handleKeyDown)
-        function handleKeyDown(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault()
-                const chatInputValue = chatInput.value
-                if (!chatInputValue) {
-                    window.__dialogutils.closeDialog(dialogDiv)
-                }
-                chatInput.removeEventListener('keydown', handleKeyDown)
-                resolve(chatInputValue)
+async function waitInput(dialogDiv) {
+    const chatInput = dialogDiv.querySelector('#chatInput')
+    chatInput.value = ''
+    chatInput.focus()
+    chatInput.addEventListener('keydown', handleKeyDown)
+    function handleKeyDown(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault()
+            const chatInputValue = chatInput.value
+            if (!chatInputValue) {
+                window.__dialogutils.closeDialog(dialogDiv)
             }
+            chatInput.removeEventListener('keydown', handleKeyDown)
+            return chatInputValue
         }
-    })
+    }
 }
 
-function customShowDialog() {
-    return new Promise((resolve) => {
-        const bodyElement = `
+async function customShowDialog() {
+    const bodyElement = `
             <input type="text" id="chatInput">
         `
-        const dialogDiv = window.__dialogutils.showDialog('Enter Chat', bodyElement)
-        resolve(dialogDiv)
-    })
+    return window.__dialogutils.showDialog('Enter Chat', bodyElement)
 }
 
 console.log(__pluginId__, __version__)
