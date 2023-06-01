@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.22'
+const __version__ = 'v2.23'
 
 let plugins
 let importedPluginsId
@@ -90,7 +90,7 @@ async function updatePlugin(plugin) {
 
         const unloadSuccess = unloadPlugin(plugin)
         if (!unloadSuccess) {
-            log(`'${plugin.id}'` + ' does not support auto update')
+            log(`'${plugin.id}'` + " has a update. but doesn't support auto update")
             return
         }
         const loadSuccess = await loadPlugin(plugin)
