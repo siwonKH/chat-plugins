@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.21'
+const __version__ = 'v2.22'
 
 let plugins
 let importedPluginsId
