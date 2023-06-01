@@ -2,8 +2,8 @@ const __pluginId__ = 'notify'
 const __version__ = 'v0.4'
 
 let notification
-let isWindowFocused = true
 
+let isWindowFocused = true
 window.onfocus = function() {
     isWindowFocused = true
 }
