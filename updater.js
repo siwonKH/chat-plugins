@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.17'
+const __version__ = 'v2.18'
 
 let plugins
 let importedPluginsId
@@ -9,10 +9,20 @@ let pluginHashes = new Map()
 let timestamp
 let intervalId
 
+const logStyle = [
+    '%cUpdater', `
+  display: inline-block;
+  background-color: #060D0D;
+  color: #fff;
+  font-weight: bold;
+  padding: 0px 3px;
+  border-radius: 3px;`
+]
+
 log('loaded')
 
 function log(message) {
-    console.log(message, `(${__pluginId__} ${__version__})`)
+    console.log(...logStyle, message, `(${__pluginId__} ${__version__})`)
 }
 
 function getPlugin(pluginId) {
