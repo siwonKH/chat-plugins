@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.14'
+const __version__ = 'v2.15'
 
 let plugins
 let importedPluginsId
@@ -8,6 +8,8 @@ let pluginHashes = new Map()
 
 let timestamp
 let intervalId
+
+console.log(__pluginId__, __version__, 'loaded')
 
 function getPlugin(pluginId) {
     return plugins.find((p) => p.id === pluginId)
@@ -115,7 +117,6 @@ async function init() {
     enableAutoUpdate()
 }
 await init()
-console.log(__pluginId__, __version__, 'loaded')
 
 window.__updater = {
     _unload: () => {
