@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v1.1'
+const __version__ = 'v2.0'
 
 let plugins
 let importedPluginsId
@@ -43,17 +43,30 @@ function unloadPlugin(plugin) {
 
 async function loadPlugin(plugin) {
     const timestamp = Date.now();
-    const hashedCode = await getPluginHash(plugin.url)
-
-    if (!pluginHashes.has(plugin.id)) {
-        pluginHashes.set(plugin.id, hashedCode)
-        return
-    }
-
-    if (pluginHashes.get(plugin.id) !== hashedCode) {
+    try {
         await import(`${plugin.url}?${timestamp}`)
-        pluginHashes.set(plugin.id, hashedCode)
+    } catch (e) {
+        console.error(e)
+        return false
     }
+    return true
+}
+
+function pluginHasUpdate(plugin) {
+    return new Promise(async (resolve) => {
+        const hashedCode = await getPluginHash(plugin.url)
+        if (!pluginHashes.has(plugin.id)) {
+            pluginHashes.set(plugin.id, hashedCode)
+            resolve(false)
+            return
+        }
+        if (pluginHashes.get(plugin.id) === hashedCode) {
+            resolve(false)
+            return
+        }
+        pluginHashes.set(plugin.id, hashedCode)
+        resolve(true)
+    })
 }
 
 function updatePlugin(pluginId) {
@@ -61,18 +74,26 @@ function updatePlugin(pluginId) {
         const plugin = getPlugin(pluginId)
         if (!plugin) {
             console.log('No such plugin.')
-            resolve(false)
+            resolve()
+            return
         }
 
-        const unloadSuccess = unloadPlugin(plugin)
-        if (!unloadSuccess) {
-            console.log(pluginId, 'does not support auto update')
-            resolve(false)
+        if (await pluginHasUpdate(plugin)) {
+            const unloadSuccess = unloadPlugin(plugin)
+            if (!unloadSuccess) {
+                console.log(pluginId, 'does not support auto update')
+                resolve()
+                return
+            }
+            const loadSuccess = await loadPlugin(plugin)
+            if (!loadSuccess) {
+                console.log(pluginId, 'load failed')
+                resolve()
+                return
+            }
+            console.log(pluginId, 'updated!')
         }
-
-        await loadPlugin(plugin)
-        console.log(pluginId, 'updated!')
-        resolve(true)
+        resolve()
     })
 }
 
