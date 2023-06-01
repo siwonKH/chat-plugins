@@ -1,0 +1,16 @@
+### Plugin "updater" manual ###
+
+## macros
+updatePlugins         :: updates all plugins
+
+## How to apply to your plugin
+```
+window.__<pluginId goes here> = {
+  ...
+  ...
+  _unload: () => {
+    window.<your global function goes here> = undefined
+    ...
+  }
+}
+```
