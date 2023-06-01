@@ -1,5 +1,5 @@
 const __pluginId__ = 'dialogutils'
-const __version__ = 'v0.17'
+const __version__ = 'v0.18'
 
 let initialDialogX = 20
 let initialDialogY = 20
@@ -117,7 +117,10 @@ function closeAllDialog() {
 window.__dialogutils = {
     showDialog,
     closeDialog,
-    closeAllDialog
+    closeAllDialog,
+    _unload: () => {
+        window.clearDialog = undefined
+    }
 }
 
 window.clearDialog = window.__dialogutils.closeAllDialog
