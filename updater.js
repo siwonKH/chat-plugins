@@ -12,8 +12,8 @@ let intervalId
 const logStyle = [
     `%c${__pluginId__} ${__version__}`, `
   display: inline-block;
-  background-color: #060D0D;
-  color: #fff;
+  background-color: #221A03;
+  color: #FEFEFE;
   font-weight: bold;
   padding: 0px 3px;
   border-radius: 3px;`
@@ -135,7 +135,7 @@ async function init() {
 setTimeout(async () => {
     log('loaded')
     await init()
-}, 1000)
+}, 500)
 
 window.__updater = {
     _unload: () => {
