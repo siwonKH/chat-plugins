@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.6t1'
+const __version__ = 'v2.6t2'
 
 let plugins
 let importedPluginsId
@@ -57,7 +57,6 @@ async function loadPlugin(plugin) {
 async function pluginHasUpdate(plugin) {
     const cachedHashedCode = await getPluginHash(plugin.url)
     if (!pluginHashes.has(plugin.id)) {
-        console.log('init hash')
         pluginHashes.set(plugin.id, cachedHashedCode)
     }
     const timestamp = Date.now()
@@ -96,7 +95,7 @@ async function updateAllPlugin() {
     for (const plugin of importedPlugins) {
         await updatePlugin(plugin.id)
     }
-    console.log('Everything up-to-date!')
+    console.log('Everything up-to-date!', `(${__pluginId__} ${__version__})`)
 }
 
 function _unload() {
