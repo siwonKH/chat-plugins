@@ -1,5 +1,5 @@
 const __pluginId__ = 'notify'
-const __version__ = 'v0.3'
+const __version__ = 'v0.4'
 
 let notification
 let isWindowFocused = true
@@ -11,7 +11,7 @@ window.onblur = function() {
     isWindowFocused = false
 }
 
-showNotification('Developer Tab', `${__pluginId__}. ${__dialogVersion__}`)
+showNotification('Developer Tab', `${__pluginId__}. ${__version__}`)
 
 window.__core.onBroadcast((data) => {
     if (data.room === undefined || data.room === window.__basic.getRoom()) {
