@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.5t2'
+const __version__ = 'v2.6'
 
 let plugins
 let importedPluginsId
@@ -28,8 +28,7 @@ async function sha1(message) {
 }
 
 async function getPluginHash(url) {
-    const timestamp = Date.now();
-    const res = await fetch(`${url}?${timestamp}`)
+    const res = await fetch(url)
     const code = await res.text()
     return await sha1(code)
 }
@@ -56,16 +55,18 @@ async function loadPlugin(plugin) {
 }
 
 async function pluginHasUpdate(plugin) {
-    const hashedCode = await getPluginHash(plugin.url)
+    const cachedHashedCode = await getPluginHash(plugin.url)
     if (!pluginHashes.has(plugin.id)) {
+        console.log('init hash')
+        pluginHashes.set(plugin.id, cachedHashedCode)
+    }
+    const timestamp = Date.now()
+    const hashedCode = await getPluginHash(`${plugin.url}?${timestamp}`)
+    if (pluginHashes.get(plugin.id) !== hashedCode) {
         pluginHashes.set(plugin.id, hashedCode)
-        return false
+        return true
     }
-    if (pluginHashes.get(plugin.id) === hashedCode) {
-        return false
-    }
-    pluginHashes.set(plugin.id, hashedCode)
-    return true
+    return false
 }
 
 async function updatePlugin(pluginId) {
@@ -102,8 +103,8 @@ function _unload() {
     window.updatePlugins = undefined
 }
 
+updateAllPlugin()
 window.__updater = { _unload }
-
 window.updatePlugins = updateAllPlugin
 
 console.log(__pluginId__, __version__)
