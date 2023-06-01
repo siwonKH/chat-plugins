@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.15'
+const __version__ = 'v2.16'
 
 let plugins
 let importedPluginsId
@@ -9,7 +9,11 @@ let pluginHashes = new Map()
 let timestamp
 let intervalId
 
-console.log(__pluginId__, __version__, 'loaded')
+log('loaded')
+
+function log(message) {
+    console.log(message, `(${__pluginId__} ${__version__})`)
+}
 
 function getPlugin(pluginId) {
     return plugins.find((p) => p.id === pluginId)
@@ -76,16 +80,16 @@ async function updatePlugin(plugin) {
     if (await pluginHasUpdate(plugin)) {
         const unloadSuccess = unloadPlugin(plugin)
         if (!unloadSuccess) {
-            console.log(`'${plugin.id}'`, 'does not support auto update')
+            log(`'${plugin.id}'` + ' does not support auto update')
             return
         }
         const loadSuccess = await loadPlugin(plugin)
         if (!loadSuccess) {
-            console.log(`'${plugin.id}'`, 'load failed')
+            log(`'${plugin.id}'` + ' load failed')
             return
         }
         pluginHashes.set(plugin.id, await getPluginHash(`${plugin.url}?${timestamp}`))
-        console.log(`'${plugin.id}'`, 'updated!')
+        log(`'${plugin.id}'` + ' updated!')
     }
 }
 
@@ -98,13 +102,13 @@ async function updateAllPlugin() {
 
 function enableAutoUpdate() {
     intervalId = setInterval(updateAllPlugin, 30000)
-    console.log('Auto update on')
+    log('Auto update on')
 }
 
 function disableAutoUpdate() {
     clearInterval(intervalId)
     intervalId = undefined
-    console.log('Auto update off')
+    log('Auto update off')
 }
 
 function toggleAutoUpdate() {
@@ -128,7 +132,7 @@ window.__updater = {
 
 window.updatePlugins = async () => {
     await updateAllPlugin()
-    console.log('Everything up-to-date!', `(${__pluginId__} ${__version__})`)
+    log('Everything up-to-date!')
 }
 
 window.toggleAutoUpdate = toggleAutoUpdate
