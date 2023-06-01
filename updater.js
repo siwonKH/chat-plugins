@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.6t2'
+const __version__ = 'v2.6t3'
 
 let plugins
 let importedPluginsId
@@ -105,5 +105,3 @@ function _unload() {
 updateAllPlugin()
 window.__updater = { _unload }
 window.updatePlugins = updateAllPlugin
-
-console.log(__pluginId__, __version__)
