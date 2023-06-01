@@ -110,7 +110,7 @@ async function updateAllPlugin() {
 }
 
 function enableAutoUpdate() {
-    intervalId = setInterval(updateAllPlugin, 30000)
+    intervalId = setInterval(updateAllPlugin, 20000)
 }
 
 function disableAutoUpdate() {
