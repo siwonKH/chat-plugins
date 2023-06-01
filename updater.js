@@ -1,26 +1,21 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v0.4t2'
+const __version__ = 'v1.0'
 
 let plugins
 let importedPluginsId
-let importedPlugins
-
+let importedPlugins = []
 let pluginHashes = new Map()
 
-function init() {
-    refreshPluginList()
-
-    importedPlugins.forEach(async (plugin) => {
-        const hashedCode = await getPluginHash(plugin.url)
-        pluginHashes.set(plugin.id, hashedCode)
-    })
+function getPlugin(pluginId) {
+    return plugins.find((p) => p.id === pluginId)
 }
 
 function refreshPluginList() {
     plugins = window.__loader.getPlugins()
     importedPluginsId = window.__loader.getImportedPlugins()
-
-    importedPlugins = plugins.filter((p) => importedPluginsId.includes(p.id))
+    for (const importedPluginId of importedPluginsId) {
+        importedPlugins.push(getPlugin(importedPluginId))
+    }
 }
 
 async function sha1(message) {
@@ -37,27 +32,67 @@ async function getPluginHash(url) {
     return await sha1(code)
 }
 
+function unloadPlugin(plugin) {
+    const pluginObj = '__' + plugin.id
+    if (!window[pluginObj]._unload) {
+        return false
+    }
+    window[pluginObj]._unload()
+    return true
+}
+
+async function loadPlugin(plugin) {
+    const timestamp = Date.now();
+    const hashedCode = await getPluginHash(plugin.url)
+
+    if (!pluginHashes.has(plugin.id)) {
+        pluginHashes.set(plugin.id, hashedCode)
+        return
+    }
+
+    if (pluginHashes.get(plugin.id) !== hashedCode) {
+        await import(`${plugin.url}?${timestamp}`)
+        pluginHashes.set(plugin.id, hashedCode)
+    }
+}
+
+function updatePlugin(pluginId) {
+    return new Promise(async (resolve) => {
+        const plugin = getPlugin(pluginId)
+        if (!plugin) {
+            console.log('No such plugin.')
+            resolve(false)
+        }
+
+        const unloadSuccess = unloadPlugin(plugin)
+        if (!unloadSuccess) {
+            console.log(pluginId, 'does not support auto update')
+            resolve(false)
+        }
+
+        await loadPlugin(plugin)
+        console.log(pluginId, 'updated!')
+        resolve(true)
+    })
+}
+
 function updateAllPlugin() {
     return new Promise(async (resolve) => {
         refreshPluginList()
 
-        const timestamp = Date.now();
-
         for (const plugin of importedPlugins) {
-            const hashedCode = await getPluginHash(plugin.url)
-
-            if (pluginHashes.get(plugin.id) !== hashedCode) {
-                await import(`${plugin.url}?${timestamp}`)
-                console.log('updated', plugin.id)
-                pluginHashes.set(plugin.id, hashedCode)
-            }
+            await updatePlugin(plugin.id)
         }
 
         resolve('Everything up-to-date!')
     })
 }
 
-init()
+function _unload() {
+    window.updatePlugins = undefined
+}
+
+window.__updater._unload = _unload
 
 window.updatePlugins = updateAllPlugin
 
