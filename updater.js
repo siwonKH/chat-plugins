@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.1'
+const __version__ = 'v2.2'
 
 let plugins
 let importedPluginsId
@@ -38,6 +38,7 @@ function unloadPlugin(plugin) {
         return false
     }
     window[pluginObj]._unload()
+    window[pluginObj] = undefined
     return true
 }
 
@@ -104,7 +105,7 @@ async function updateAllPlugin() {
         await updatePlugin(plugin.id)
     }
 
-    return 'Everything up-to-date!'
+    console.log('Everything up-to-date!')
 }
 
 function _unload() {
