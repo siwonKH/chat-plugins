@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.4'
+const __version__ = 'v2.5'
 
 let plugins
 let importedPluginsId
@@ -28,7 +28,8 @@ async function sha1(message) {
 }
 
 async function getPluginHash(url) {
-    const res = await fetch(url)
+    const timestamp = Date.now();
+    const res = await fetch(`${url}?${timestamp}`)
     const code = await res.text()
     return await sha1(code)
 }
