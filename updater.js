@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.0'
+const __version__ = 'v2.1'
 
 let plugins
 let importedPluginsId
@@ -97,16 +97,14 @@ function updatePlugin(pluginId) {
     })
 }
 
-function updateAllPlugin() {
-    return new Promise(async (resolve) => {
-        refreshPluginList()
+async function updateAllPlugin() {
+    refreshPluginList()
 
-        for (const plugin of importedPlugins) {
-            await updatePlugin(plugin.id)
-        }
+    for (const plugin of importedPlugins) {
+        await updatePlugin(plugin.id)
+    }
 
-        resolve('Everything up-to-date!')
-    })
+    return 'Everything up-to-date!'
 }
 
 function _unload() {
