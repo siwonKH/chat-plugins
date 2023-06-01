@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.18'
+const __version__ = 'v2.18t1'
 
 let plugins
 let importedPluginsId
@@ -18,8 +18,6 @@ const logStyle = [
   padding: 0px 3px;
   border-radius: 3px;`
 ]
-
-log('loaded')
 
 function log(message) {
     console.log(...logStyle, message, `(${__pluginId__} ${__version__})`)
@@ -134,7 +132,10 @@ async function init() {
     await updateAllPlugin()
     enableAutoUpdate()
 }
-await init()
+setTimeout(async () => {
+    log('loaded')
+    await init()
+}, 1000)
 
 window.__updater = {
     _unload: () => {
