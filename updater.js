@@ -1,10 +1,12 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.8'
+const __version__ = 'v2.9'
 
 let plugins
 let importedPluginsId
 let importedPlugins = []
 let pluginHashes = new Map()
+
+let timestamp
 
 function getPlugin(pluginId) {
     return plugins.find((p) => p.id === pluginId)
@@ -47,7 +49,6 @@ function unloadPlugin(plugin) {
 }
 
 async function loadPlugin(plugin) {
-    const timestamp = Date.now();
     try {
         await import(`${plugin.url}?${timestamp}`)
     } catch (e) {
@@ -62,13 +63,8 @@ async function pluginHasUpdate(plugin) {
     if (!pluginHashes.has(plugin.id)) {
         pluginHashes.set(plugin.id, cachedHashedCode)
     }
-    const timestamp = Date.now()
     const hashedCode = await getPluginHash(`${plugin.url}?${timestamp}`)
-    if (pluginHashes.get(plugin.id) !== hashedCode) {
-        pluginHashes.set(plugin.id, hashedCode)
-        return true
-    }
-    return false
+    return pluginHashes.get(plugin.id) !== hashedCode;
 }
 
 async function updatePlugin(pluginId) {
@@ -77,6 +73,8 @@ async function updatePlugin(pluginId) {
         console.log('No such plugin', `'${pluginId}'`)
         return
     }
+
+    timestamp = Date.now()
 
     if (await pluginHasUpdate(plugin)) {
         const unloadSuccess = unloadPlugin(plugin)
@@ -89,6 +87,7 @@ async function updatePlugin(pluginId) {
             console.log(`'${pluginId}'`, 'load failed')
             return
         }
+        pluginHashes.set(plugin.id, getPluginHash(`${plugin.url}?${timestamp}`))
         console.log(`'${pluginId}'`, 'updated!')
     }
 }
@@ -101,9 +100,11 @@ async function updateAllPlugin() {
     console.log('Everything up-to-date!', `(${__pluginId__} ${__version__})`)
 }
 
-function _unload() {
-    // window.updatePlugins = undefined
+window.__updater = {
+    _unload: () => {
+        window.updatePlugins = undefined
+    },
+    _version: __version__
 }
-window.__updater = { _unload }
 window.updatePlugins = updateAllPlugin
 updateAllPlugin()
