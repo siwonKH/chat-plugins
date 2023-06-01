@@ -1,7 +1,7 @@
 const __pluginId__ = 'dialog'
-const __version__ = 'v0.7'
+const __version__ = 'v0.8'
 
-window.l = async () => {
+window.loopChat = async () => {
     const dialogDiv = await customShowDialog()
     for (;;) {
         const msg = await waitInput(dialogDiv)
@@ -9,6 +9,8 @@ window.l = async () => {
         await chat([msg])
     }
 }
+
+window.l = window.loopChat
 
 function waitInput(dialogDiv) {
     return new Promise((resolve) => {
@@ -27,6 +29,20 @@ function waitInput(dialogDiv) {
                 resolve(chatInputValue)
             }
         }
+
+        const authorInput = dialogDiv.querySelector('#authorInput')
+        authorInput.addEventListener('keydown', handleKeyDownForAuthor)
+        function handleKeyDownForAuthor(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault()
+                const authorInputValue = authorInput.value
+                if (authorInputValue) {
+                    chatInput.removeEventListener('keydown', handleKeyDownForAuthor)
+                    author([authorInputValue])
+                    authorInput.style.display = 'none'
+                }
+            }
+        }
     })
 }
 
@@ -34,6 +50,7 @@ function customShowDialog() {
     return new Promise((resolve) => {
         const bodyElement = `
             <input type="text" id="chatInput">
+            <input type="text" id="authorInput" placeholder="author">
         `
         const dialogDiv = window.__dialogutils.showDialog('Enter Chat', bodyElement)
         resolve(dialogDiv)
@@ -43,6 +60,7 @@ function customShowDialog() {
 window.__dialog = {
     _unload: () => {
         window.l = undefined
+        window.loopChat = undefined
     }
 }
 
