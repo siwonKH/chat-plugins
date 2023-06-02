@@ -1,15 +1,15 @@
 const __pluginId__ = 'notify'
-const __version__ = 'v0.6'
+const __version__ = 'v0.7'
 
 let notification
 
-showNotification('Developer Tab', `${__pluginId__}. ${__version__}`)
+showNotification('Notify', `${__pluginId__}. ${__version__}`)
 
 window.__core.onBroadcast((data) => {
     if (data.room === undefined || data.room === window.__basic.getRoom()) {
         if (data.type === 'chat' || data.type === 'hello') {
             if (document.visibilityState === 'hidden') {
-                showNotification('Notify', data.message)
+                showNotification(`Notify ${__version__}`, data.message)
             }
         }
     }
