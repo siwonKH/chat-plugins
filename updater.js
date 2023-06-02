@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.23t3'
+const __version__ = 'v2.24'
 
 let plugins
 let importedPluginsId
@@ -148,7 +148,8 @@ window.__updater = {
 
 window.updatePlugins = () => {
     updateAllPlugin()
-    log('Everything up-to-date!')
+        .then(() => log('Everything up-to-date!'))
+    return 'checking for updates..'
 }
 
 window.toggleAutoUpdate = toggleAutoUpdate
