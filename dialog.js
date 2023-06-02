@@ -1,5 +1,5 @@
 const __pluginId__ = 'dialog'
-const __version__ = 'v0.9'
+const __version__ = 'v0.9t1'
 
 window.loopChat = async () => {
     const dialogDiv = await customShowDialog()
