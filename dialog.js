@@ -1,5 +1,5 @@
 const __pluginId__ = 'dialog'
-const __version__ = 'v0.9t1'
+const __version__ = 'v0.10'
 
 window.loopChat = async () => {
     const dialogDiv = await customShowDialog()
@@ -53,7 +53,7 @@ function customShowDialog() {
             <input type="text" id="chatInput">
             <input type="text" id="authorInput" placeholder="author">
         `
-        const dialogDiv = window.__dialogutils.showDialog('Enter Chat', bodyElement)
+        const dialogDiv = window.__dialogutils.showDialog(`Chat (${__version__})`, bodyElement)
         resolve(dialogDiv)
     })
 }
