@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.23t1'
+const __version__ = 'v2.23t2'
 
 let plugins
 let importedPluginsId
@@ -110,7 +110,7 @@ async function updateAllPlugin() {
 }
 
 function enableAutoUpdate() {
-    intervalId = setInterval(updateAllPlugin, 20000)
+    intervalId = setInterval(updateAllPlugin, 15000)
 }
 
 function disableAutoUpdate() {
@@ -148,7 +148,7 @@ window.__updater = {
 
 window.updatePlugins = () => {
     return new Promise(async (resolve) => {
-        resolve()
+        resolve('')
         await updateAllPlugin()
         log('Everything up-to-date!')
     })
