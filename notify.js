@@ -1,13 +1,13 @@
 const __pluginId__ = 'notify'
-const __version__ = 'v0.8t1'
+const __version__ = 'v0.9'
 
 let notification
-let unloaded = false
+let disable = false
 
 showNotification(`Notify ${__version__}`, 'Notify loaded.')
 
 window.__core.onBroadcast((data) => {
-    if (unloaded) return
+    if (disable) return
 
     if (data.room === undefined || data.room === window.__basic.getRoom()) {
         if (data.type === 'chat' || data.type === 'hello') {
@@ -50,11 +50,22 @@ function closeNotification() {
 
 window.__notify = {
     _unload: () => {
+        window.toggleNotify = undefined
         closeNotification()
         showNotification = undefined
         createNotification = undefined
         closeNotification = undefined
-        unloaded = true
+        disable = true
+    }
+}
+
+window.toggleNotify = () => {
+    if (disable) {
+        disable = false
+        return 'enabled'
+    } else {
+        disable = true
+        return 'disabled'
     }
 }
 
