@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.23'
+const __version__ = 'v2.23t1'
 
 let plugins
 let importedPluginsId
@@ -146,9 +146,12 @@ window.__updater = {
     _version: __version__
 }
 
-window.updatePlugins = async () => {
-    await updateAllPlugin()
-    log('Everything up-to-date!')
+window.updatePlugins = () => {
+    return new Promise(async (resolve) => {
+        resolve()
+        await updateAllPlugin()
+        log('Everything up-to-date!')
+    })
 }
 
 window.toggleAutoUpdate = toggleAutoUpdate
