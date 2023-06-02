@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.25'
+const __version__ = 'v2.26'
 
 let plugins
 let importedPluginsId
@@ -136,7 +136,7 @@ function init() {
             enableAutoUpdate()
         })
 }
-setTimeout(init, 500)
+init()
 
 window.__updater = {
     _unload: () => {
