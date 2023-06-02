@@ -1,5 +1,5 @@
 const __pluginId__ = 'notify'
-const __version__ = 'v0.8'
+const __version__ = 'v0.8t1'
 
 let notification
 let unloaded = false
