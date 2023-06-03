@@ -1,5 +1,5 @@
 const __pluginId__ = 'dialog'
-const __version__ = 'v0.11'
+const __version__ = 'v0.12'
 
 window.loopChat = () => {
     const dialogDiv = customShowDialog()
@@ -17,7 +17,7 @@ window.l = window.loopChat
 
 function waitInput(dialogDiv) {
     return new Promise((resolve) => {
-        const chatInput = dialogDiv.querySelector('#chatInput')
+        const chatInput = document.querySelector('#chatInput')
         chatInput.value = ''
         chatInput.focus()
         chatInput.addEventListener('keydown', handleKeyDown)
@@ -33,7 +33,7 @@ function waitInput(dialogDiv) {
             }
         }
 
-        const authorInput = dialogDiv.querySelector('#authorInput')
+        const authorInput = document.querySelector('#authorInput')
         authorInput.addEventListener('keydown', handleKeyDownForAuthor)
         function handleKeyDownForAuthor(event) {
             if (event.key === 'Enter') {
