@@ -1,13 +1,16 @@
 const __pluginId__ = 'dialog'
-const __version__ = 'v0.10t3'
+const __version__ = 'v0.11'
 
-window.loopChat = async () => {
-    const dialogDiv = await customShowDialog()
-    for (;;) {
-        const msg = await waitInput(dialogDiv)
-        if (!msg) break
-        await chat([msg])
-    }
+window.loopChat = () => {
+    const dialogDiv = customShowDialog()
+        .then(async () => {
+            for (;;) {
+                const msg = await waitInput(dialogDiv)
+                if (!msg) break
+                await chat([msg])
+            }
+        })
+    return 'Showing dialog to current document'
 }
 
 window.l = window.loopChat
@@ -40,6 +43,7 @@ function waitInput(dialogDiv) {
                     chatInput.removeEventListener('keydown', handleKeyDownForAuthor)
                     author([authorInputValue])
                     authorInput.style.display = 'none'
+                    chatInput.focus()
                     console.log('author:', authorInputValue)
                 }
             }
