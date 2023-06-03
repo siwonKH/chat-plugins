@@ -1,5 +1,5 @@
 const __pluginId__ = 'dialog'
-const __version__ = 'v0.12'
+const __version__ = 'v0.13'
 
 window.loopChat = () => {
     const dialogDiv = customShowDialog()
@@ -40,7 +40,7 @@ function waitInput(dialogDiv) {
                 event.preventDefault()
                 const authorInputValue = authorInput.value
                 if (authorInputValue) {
-                    chatInput.removeEventListener('keydown', handleKeyDownForAuthor)
+                    authorInput.removeEventListener('keydown', handleKeyDownForAuthor)
                     author([authorInputValue])
                     authorInput.style.display = 'none'
                     chatInput.focus()
