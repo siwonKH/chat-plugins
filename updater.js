@@ -1,5 +1,5 @@
 const __pluginId__ = 'updater'
-const __version__ = 'v2.26'
+const __version__ = 'v2.27'
 
 let plugins
 let importedPluginsId
@@ -120,12 +120,11 @@ function disableAutoUpdate() {
 
 function toggleAutoUpdate() {
     if (intervalId) {
-        enableAutoUpdate()
-        return 'Auto update ON'
-    }
-    else {
         disableAutoUpdate()
         return 'Auto update OFF'
+    } else {
+        enableAutoUpdate()
+        return 'Auto update ON'
     }
 }
 
@@ -140,7 +139,9 @@ init()
 
 window.__updater = {
     _unload: () => {
-        disableAutoUpdate()
+        if (intervalId) {
+            disableAutoUpdate()
+        }
         window.updatePlugins = undefined
         window.toggleAutoUpdate = undefined
     },
